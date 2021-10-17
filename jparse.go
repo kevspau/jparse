@@ -5,31 +5,37 @@ import (
 	"os"
 )
 
+var decoded map[string]interface{}
+
 type parse interface {
 	GetValue(name string) interface{}
 	SetValue(name string, value string) error
+	Decode() *map[string]interface{}
 }
 
 func (j *jsonFile) GetValue(name string) interface{} {
-	return j.decode[name]
+	return decoded[name]
 }
 func (j *jsonFile) SetValue(name string, value string) error {
-	j.decode[name] = value
-	b, e := json.Marshal(j.decode)
+	decoded[name] = value
+	b, e := json.Marshal(decoded)
 	if e != nil {
 		return e
 	}
 	e = os.WriteFile(j.name, b, 0777)
+	j.body = b
 	if e != nil {
 		return e
 	}
 	return nil
 }
+func (j *jsonFile) Decode() map[string]interface{} {
+	return decoded
+}
 
 type jsonFile struct {
 	name string
 	body []byte
-	decode map[string]interface{}
 	parse
 }
 
@@ -38,6 +44,7 @@ func New(file string) (*jsonFile, error) {
 	if e != nil {
 		return nil, e
 	}
-	json := jsonFile{name: file, body: f, decode: json.Unmarshal(f, map[string]interface{})}
+	json := jsonFile{name: file, body: f}
+	json.Unmarshal(f, &decoded)
 	return &json, nil
 }
