@@ -6,15 +6,33 @@ import (
 )
 
 type parse interface {
-	GetValue(name string) string
+	GetValue(name string) interface{}
 	SetValue(name string, value string) error
 	Decode() *map[string]interface{}
 }
 
-func (j *jsonFile) GetValue(name string) string {
+func (j *jsonFile) GetValue(name string) interface{} {
 	var decoded map[string]interface{}
 	json.Unmarshal(j.body, &decoded)
-	return decoded[name].(string)
+	switch decoded.(type) {
+	case string:
+		return decoded[name].(string)
+	case int64:
+		return decoded[name].(int64)
+	case float64:
+		return decoded[name].(float64)
+	case map[string]interface{}:
+		return decoded[name].(map[string]interface{})
+	case []string:
+		return decoded[name].([]string)
+	case []int64:
+		return decoded[name].([]int64)
+	case []float64:
+		return decoded[name].([]float64)
+	case []map[string]interface{}:
+		return decoded[name].([]map[string]interface{})
+	}
+	return decoded[name]
 }
 func (j *jsonFile) SetValue(name string, value string) error {
 	var decoded map[string]interface{}
@@ -25,7 +43,10 @@ func (j *jsonFile) SetValue(name string, value string) error {
 		return e
 	}
 	e = os.WriteFile(j.name, b, 0777)
-	return e
+	if e != nil {
+		return e
+	}
+	return nil
 }
 func (j *jsonFile) Decode() *map[string]interface{} {
 	var decoded map[string]interface{}
