@@ -44,7 +44,7 @@ func New(file string) (*jsonFile, error) {
 	if e != nil {
 		return nil, e
 	}
-	json := jsonFile{name: file, body: f}
+	j := jsonFile{name: file, body: f}
 	json.Unmarshal(f, &decoded)
-	return &json, nil
+	return &j, nil
 }
