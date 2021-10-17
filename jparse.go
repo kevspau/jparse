@@ -14,7 +14,7 @@ type parse interface {
 func (j *jsonFile) GetValue(name string) interface{} {
 	var decoded map[string]interface{}
 	json.Unmarshal(j.body, &decoded)
-	switch decoded.(type) {
+	switch decoded[name].(type) {
 	case string:
 		return decoded[name].(string)
 	case int64:
