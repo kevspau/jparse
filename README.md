@@ -12,7 +12,6 @@ __**a small and simple wrapper for managing .json files**__
 run `go get github.com/csharpdf/jparse` in your console, and then import it into your project:
 
 ```go
-
 import (
 	"fmt"
 
