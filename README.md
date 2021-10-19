@@ -1,5 +1,5 @@
 # jparse
-__**a small and simple wrapper for managing .json files**__
+*a small and simple wrapper for managing .json files*
 
 ## Why?
 
