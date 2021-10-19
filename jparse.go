@@ -48,3 +48,7 @@ func New(file string) (*jsonFile, error) {
 	json.Unmarshal(f, &decoded)
 	return &j, nil
 }
+/*
+..\..\..\go\pkg\mod\github.com\csharpdf\jparse@v0.0.0-20211017041748-c4870ae2b8f5\jparse.go:41:40: cannot use json.Unmarshal(f, map[string]interface {}) (type error) as type map[string]interface {} in field value
+..\..\..\go\pkg\mod\github.com\csharpdf\jparse@v0.0.0-20211017041748-c4870ae2b8f5\jparse.go:41:66: type map[string]interface {} is not an expression
+*/
