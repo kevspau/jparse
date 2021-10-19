@@ -9,21 +9,27 @@ var decoded map[string]interface{}
 
 type parse interface {
 	GetValue(name string) interface{}
-	SetValue(name string, value string) error
-	Decode() *map[string]interface{}
+	SetValue(name string, value interface{}) error
+	Decode() map[string]interface{}
 }
 
 func (j *jsonFile) GetValue(name string) interface{} {
 	return decoded[name]
 }
-func (j *jsonFile) SetValue(name string, value string) error {
+func (j *jsonFile) SetValue(name string, value interface{}) error {
 	decoded[name] = value
-	b, e := json.Marshal(decoded)
+	e := j.updateFile(decoded)
+	if e != nil {
+		return e
+	}
+	return nil
+}
+func (j *jsonFile) updateFile(decode map[string]interface{}) error {
+	b, e := json.Marshal(decode)
 	if e != nil {
 		return e
 	}
 	e = os.WriteFile(j.name, b, 0777)
-	j.body = b
 	if e != nil {
 		return e
 	}
@@ -48,7 +54,3 @@ func New(file string) (*jsonFile, error) {
 	json.Unmarshal(f, &decoded)
 	return &j, nil
 }
-/*
-..\..\..\go\pkg\mod\github.com\csharpdf\jparse@v0.0.0-20211017041748-c4870ae2b8f5\jparse.go:41:40: cannot use json.Unmarshal(f, map[string]interface {}) (type error) as type map[string]interface {} in field value
-..\..\..\go\pkg\mod\github.com\csharpdf\jparse@v0.0.0-20211017041748-c4870ae2b8f5\jparse.go:41:66: type map[string]interface {} is not an expression
-*/
