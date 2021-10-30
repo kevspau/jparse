@@ -1,5 +1,6 @@
 # jparse
 *a small and simple wrapper for managing .json files*
+
 <a><img src="https://img.shields.io/badge/build-passing-green"></a>
 ## Why?
 
