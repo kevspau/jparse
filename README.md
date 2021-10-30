@@ -1,7 +1,7 @@
 # jparse
 *a small and simple wrapper for managing .json files*
 
-<a><img src="https://img.shields.io/badge/build-passing-green"></a> <a><img src="https://img.shields.io/badge/files-1-blue"></a> <a><img src="https://img.shields.io/badge/last%20updated-10%2F19%2F21-yellow"></a>
+<a><img src="https://img.shields.io/badge/build-passing-green"></a> <a><img src="https://img.shields.io/badge/files-4-blue"></a> <a><img src="https://img.shields.io/badge/last%20updated-10%2F19%2F21-yellow"></a>
 ## Why?
 
 - I was pretty bored, wanted to do something
