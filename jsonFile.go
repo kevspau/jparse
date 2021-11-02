@@ -4,6 +4,7 @@ import (
   "encoding/json"
   "os"
 )
+
 func (j *jsonFile) GetValue(name string) interface{} {
 	return decoded[name]
 }
